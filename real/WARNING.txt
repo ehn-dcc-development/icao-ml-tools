@@ -1,0 +1,5 @@
+Warning - this is a (by the time you read this) _STALE_ snapshot of the oprational data.
+
+Consult the URLs in the main script if you need a fresh version.
+
+

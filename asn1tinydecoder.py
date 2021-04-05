@@ -38,7 +38,8 @@ def asn1_node_is_child_of(i_indices, j_indices):
     """is true if one ASN1 chunk is inside another chunk."""
     ixs, ixf, ixl = i_indices
     jxs, jxf, jxl = j_indices
-    return ((ixf <= jxs) and (jxl <= ixl)) or ((jxf <= ixs) and (ixl <= jxl))
+    # print(f"(({ixf} <= {jxs}) and ({jxl} <= {ixl}) or (({jxf} <= {ixs}) and ({ixl} <= {jxl}))");
+    return ((ixf <= jxs) and (jxl < ixl)) or ((jxf <= ixs) and (ixl < jxl))
 
 
 # END NAVIGATE

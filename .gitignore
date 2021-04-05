@@ -1,0 +1,6 @@
+.rnd
+__pycache__
+fake
+.DS_Store
+real/.DS_Store
+*.pyc
