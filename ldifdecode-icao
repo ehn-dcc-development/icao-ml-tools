@@ -1,0 +1,50 @@
+#!/usr/bin/perl -w
+#
+# First argument is a file in LDIF format. This program will output it with any
+# encoded entries decoded.
+#
+# You can get suitable output from 'slapcat', which you will need to run with
+# root privileges.
+#
+# Cameron Kerr
+
+use strict;
+use Getopt::Std;
+use Net::LDAP::LDIF;
+use Net::LDAP::Entry;
+use Data::Dumper;
+use MIME::Base64;
+
+die "Syntax: $0 <outdir>\n" unless (@ARGV == 1);
+my $OUTDIR=shift @ARGV;
+
+my $ldif = Net::LDAP::LDIF->new( undef, "r", onerror => 'undef' )
+	or die "Could not read file: $!\n";
+
+$|++;
+while( not $ldif->eof() ) {
+
+	my $entry = $ldif->read_entry();
+
+	if( $ldif->error() ) {
+		warn "Error   msg: ". $ldif->error() ."\n";
+		warn "Error input::\n". $ldif->error_lines() ."\n";
+		next;
+	}
+	unless($entry->{'attrs'}->{'cscamasterlistdata'}) {
+		# warn "Skipping.";
+		# warn Dumper($entry);
+		next;	
+	};
+	my $name = $entry->{'attrs'}->{'cn'}[0];
+	$name =~ s/_masterlist//i;
+	$name =$1 if $name =~m/C=(\w+)/;
+
+	my $data =  $entry->{'attrs'}->{'cscamasterlistdata'}[0];
+	print "$name	".length($data)."\n";
+	open(FH,'>',$OUTDIR."/$name-decoded.p7") or die $!;
+	print FH $data;
+	close(FH);
+
+};
+$ldif->done;

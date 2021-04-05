@@ -15,3 +15,4 @@ This requires the resign ulility from
 * gen-trust.list.sh - Parse the MasterLists in real/* and convert these into 'fake ones'
 * decode-and-regerate.sh - Show some info about the DSCs
 * icao-ml-unpack.py - Script to unpack the ASN.1 packaged master lists.
+* ldifdecode-icao - script to unpack ICAO style ldif dump and output the PKCS#7 files.

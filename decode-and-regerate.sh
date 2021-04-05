@@ -76,6 +76,8 @@ rename_and_to_pem NL \
 dd if=${DIR}/ICAO/ICAO_ML_Jan2021.ml bs=1 skip=423296  count=1632 | openssl x509 -inform DER  -out  ${DIR}/ICAO/ICAO-link.der -outform DER
 dd if=${DIR}/ICAO/ICAO_ML_Jan2021.ml bs=1 skip=424736| openssl x509 -inform DER  -out  ${DIR}/ICAO/ICAO-csca.der -outform DER
 
+./ldifdecode-icao fake < real/ICAO/icaopkd-002-ml-000171.ldif
+
 NO_CMS_SIGN=yup rename_and_to_pem ICAO \
 	ICAO-csca.der \
 	ICAO-link.der \
